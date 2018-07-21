@@ -1,17 +1,29 @@
 require('dotenv').config();
-const Twitter = require('twitter');
 
-const client = new Twitter({
-  consumer_key: process.env.CONSTUMER_KEY,
-  consumer_secret: process.env.CONSTUMER_SECRET,
-  access_token_key: process.env.ACCESS_TOKEN,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET
-});
+const inquirer = require('inquirer');
+const ora = require('ora');
+const emojic = require("emojic");
 
-client.post('statuses/update', { status: 'Custom tweet from terminal with nodejs' })
-  .then(function (tweet) {
-    console.log(tweet);
-  })
-  .catch(function (error) {
-    throw error;
-  });
+const questions = require('./questions');
+const sendTweet = require('./twitter');
+
+// config spinner
+const spinner = ora('Posting your tweet...');
+spinner.color = 'yellow';
+
+(async () => {
+  require('./init')();
+
+  try {
+    let response = await inquirer.prompt(questions);
+
+    spinner.start();
+    await sendTweet(response.tweet);
+    spinner.stop();
+
+    console.log(emojic.whiteCheckMark + "   Your tweet has been published");
+  } catch (err) {
+    spinner.stop();
+    console.log(emojic.fearful + "  " + err);
+  }
+})();

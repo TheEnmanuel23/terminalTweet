@@ -21,9 +21,9 @@ spinner.color = 'yellow';
     await sendTweet(response.tweet);
     spinner.stop();
 
-    console.log(emojic.whiteCheckMark + "   Your tweet has been published");
+    console.log(`${emojic.whiteCheckMark}  Your tweet has been published`);
   } catch (err) {
     spinner.stop();
-    console.log(emojic.fearful + "  " + err);
+    console.log(`${emojic.fearful}  err`);
   }
 })();

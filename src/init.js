@@ -1,7 +1,7 @@
 const fliguet = require('figlet');
 const chalk = require('chalk');
 
-module.exports = function () {
+module.exports = () => {
   require('clear')();
 
   console.log(

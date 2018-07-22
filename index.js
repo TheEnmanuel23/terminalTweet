@@ -4,15 +4,17 @@ const inquirer = require('inquirer');
 const ora = require('ora');
 const emojic = require("emojic");
 
-const questions = require('./questions');
-const sendTweet = require('./twitter');
+const questions = require('./src/questions');
+const sendTweet = require('./src/twitter');
 
 // config spinner
 const spinner = ora('Posting your tweet...');
 spinner.color = 'yellow';
 
+const log = console.log;
+
 (async () => {
-  require('./init')();
+  require('./src/init')();
 
   try {
     let response = await inquirer.prompt(questions);
@@ -21,9 +23,9 @@ spinner.color = 'yellow';
     await sendTweet(response.tweet);
     spinner.stop();
 
-    console.log(`${emojic.whiteCheckMark}  Your tweet has been published`);
+    log(`${emojic.whiteCheckMark}  Your tweet has been published`);
   } catch (err) {
     spinner.stop();
-    console.log(`${emojic.fearful}  err`);
+    log(`${emojic.fearful}  ${err}`);
   }
 })();

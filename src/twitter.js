@@ -8,8 +8,8 @@ const client = new Twitter({
   access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-module.exports = function (tweet) {
-  return client.post('statuses/update', { 
+module.exports = tweet => (
+  client.post('statuses/update', { 
     status: tweet
-  });
-}
+  })
+);
